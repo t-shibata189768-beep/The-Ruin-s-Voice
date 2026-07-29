@@ -3,36 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <title>初めての3Dゲーム</title>
-    <!-- 3Dを簡単に扱える仕組み（Three.js）を読み込む -->
-    <script src="https://cloudflare.com"></script>
+    <!-- 3Dを動かすために必要な「Three.js」という仕組みをインターネットから読み込みます -->
+    <script src="https://unpkg.com"></script>
     <style> body { margin: 0; overflow: hidden; } </style>
 </head>
 <body>
     <script>
-        // 1. 3Dの空間（ステージ）を作る
+        // 1. 3D空間（ステージ）の準備
         const scene = new THREE.Scene();
-        scene.background = new THREE.Color(0x111122); // 背景を暗い青にする
+        scene.background = new THREE.Color(0x111122); // 背景を濃い青にする
 
-        // 2. カメラ（プレイヤーの目）を作る
+        // 2. カメラ（プレイヤーの目線）の準備
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         camera.position.z = 5;
 
-        // 3. 画面に映し出すレンダラー（映像出力）を作る
+        // 3. 画面に描画する装置の準備
         const renderer = new THREE.WebGLRenderer();
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(renderer.domElement);
 
-        // 4. 立体（立方体の箱）を作る
+        // 4. 緑色の立方体（箱）を1つ作る
         const geometry = new THREE.BoxGeometry();
-        const material = new THREE.MeshBasicMaterial({ color: 0x00ff88, wireframe: true }); // 緑色のワイヤーフレーム
+        const material = new THREE.MeshBasicMaterial({ color: 0x00ff88, wireframe: true });
         const cube = new THREE.Mesh(geometry, material);
         scene.add(cube);
 
-        // 5. 毎フレーム動かす（アニメーションループ）
+        // 5. 箱を自動でクルクル回し続けるアニメーション
         function animate() {
             requestAnimationFrame(animate);
-            cube.rotation.x += 0.01; // 縦に回転
-            cube.rotation.y += 0.01; // 横に回転
+            cube.rotation.x += 0.01;
+            cube.rotation.y += 0.01;
             renderer.render(scene, camera);
         }
         animate();
