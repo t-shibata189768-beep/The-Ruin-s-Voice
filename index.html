@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>初めての3Dゲーム</title>
+    <!-- 3Dを簡単に扱える仕組み（Three.js）を読み込む -->
+    <script src="https://cloudflare.com"></script>
+    <style> body { margin: 0; overflow: hidden; } </style>
+</head>
+<body>
+    <script>
+        // 1. 3Dの空間（ステージ）を作る
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x111122); // 背景を暗い青にする
+
+        // 2. カメラ（プレイヤーの目）を作る
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.z = 5;
+
+        // 3. 画面に映し出すレンダラー（映像出力）を作る
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // 4. 立体（立方体の箱）を作る
+        const geometry = new THREE.BoxGeometry();
+        const material = new THREE.MeshBasicMaterial({ color: 0x00ff88, wireframe: true }); // 緑色のワイヤーフレーム
+        const cube = new THREE.Mesh(geometry, material);
+        scene.add(cube);
+
+        // 5. 毎フレーム動かす（アニメーションループ）
+        function animate() {
+            requestAnimationFrame(animate);
+            cube.rotation.x += 0.01; // 縦に回転
+            cube.rotation.y += 0.01; // 横に回転
+            renderer.render(scene, camera);
+        }
+        animate();
+    </script>
+</body>
+</html>
